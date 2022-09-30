@@ -1,0 +1,35 @@
+syntax = "proto2";
+
+package tipb;
+
+option java_multiple_files = true;
+option java_package = "com.pingcap.tidb.tipb";
+
+import "gogoproto/gogo.proto";
+import "schema.proto";
+import "select.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+enum DDLType {
+  TypeDDLIndex = 0;
+}
+
+message DDLRequest {
+  optional int64 table_id = 1 [(gogoproto.nullable) = false];
+  repeated ColumnInfo columns = 2;
+  repeated KeyRange ranges = 3 [(gogoproto.nullable) = false]; // For global read in join, we must point out the key ranges when we don't have the region info.
+  repeated int64 primary_prefix_column_ids = 4;
+  optional bool unique = 5; // check whether it is a unique index.
+  optional TableInfo table_info = 6;
+  optional IndexInfo index_info = 7;
+}
+
+message DDLResponse {
+  optional Error error = 1;
+
+  repeated bytes keys = 2;
+  repeated bytes values = 3;
+}
