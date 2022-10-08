@@ -25,6 +25,7 @@ message DDLRequest {
   optional bool unique = 5; // check whether it is a unique index.
   optional TableInfo table_info = 6;
   optional IndexInfo index_info = 7;
+  repeated int64 primary_column_ids = 8;
 }
 
 message DDLResponse {
