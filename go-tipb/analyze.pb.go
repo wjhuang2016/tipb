@@ -41,6 +41,7 @@ It has these top-level messages:
 	ChecksumRequest
 	ChecksumResponse
 	DDLRequest
+	KVPair
 	DDLResponse
 	Executor
 	ExchangeSender
