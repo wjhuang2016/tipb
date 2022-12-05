@@ -15,18 +15,28 @@ option (gogoproto.unmarshaler_all) = true;
 
 enum DDLType {
   TypeDDLIndex = 0;
+  TypeDDLDisIndex = 1;
+  TypeDDLDisData = 2;
+}
+
+message DisInfo {
+  repeated string tidb_address = 1;
+  repeated bytes start_key = 2;
+  repeated bytes end_key = 3;
 }
 
 message DDLRequest {
-  optional int64 table_id = 1 [(gogoproto.nullable) = false];
-  repeated ColumnInfo columns = 2;
-  repeated KeyRange ranges = 3 [(gogoproto.nullable) = false]; // For global read in join, we must point out the key ranges when we don't have the region info.
-  repeated int64 primary_prefix_column_ids = 4;
-  optional bool unique = 5; // check whether it is a unique index.
-  optional TableInfo table_info = 6;
-  optional IndexInfo index_info = 7;
-  repeated int64 primary_column_ids = 8;
-  optional bool sort = 9;
+  optional DDLType type = 1;
+  optional int64 table_id = 2 [(gogoproto.nullable) = false];
+  repeated ColumnInfo columns = 3;
+  repeated KeyRange ranges = 4 [(gogoproto.nullable) = false]; // For global read in join, we must point out the key ranges when we don't have the region info.
+  repeated int64 primary_prefix_column_ids = 5;
+  optional bool unique = 6; // check whether it is a unique index.
+  optional TableInfo table_info = 7;
+  optional IndexInfo index_info = 8;
+  repeated int64 primary_column_ids = 9;
+  optional bool sort = 10;
+  optional DisInfo disInfo = 11;
 }
 
 message DDLResponse {

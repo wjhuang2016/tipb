@@ -40,6 +40,7 @@ It has these top-level messages:
 	ChecksumRewriteRule
 	ChecksumRequest
 	ChecksumResponse
+	DisInfo
 	DDLRequest
 	DDLResponse
 	Executor
